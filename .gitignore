@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/src/PagedList.Core.Mvc/bin
+/src/PagedList.Core.Mvc/obj
+/src/PagedList.Core.Mvc.Example/bin
+/src/PagedList.Core.Mvc.Example/obj
