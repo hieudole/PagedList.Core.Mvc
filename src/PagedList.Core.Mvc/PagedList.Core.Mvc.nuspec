@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>PagedList.Core.Mvc</id>
+    <version>1.0.0</version>
+    <title>PagedList.Core.Mvc</title>
+    <authors>Troy Goode, Hieu Le</authors>
+    <owners>Hieu Le</owners>
+    <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
+    <projectUrl>https://github.com/hieudole/PagedList.Core.Mvc</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>A tag helper for generating pager control for use with PagedList.Core library.</description>
+    <copyright>Copyright 2016</copyright>
+    <tags>pager paging page aspnetcore mvc netcore core</tags>
+    <dependencies>
+      <dependency id="PagedList.Core" version="1.17.4" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\netstandard1.6\PagedList.Core.Mvc.dll" target="lib\netstandard1.6" />
+  </files>
+</package>
