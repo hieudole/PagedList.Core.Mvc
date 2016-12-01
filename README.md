@@ -1,7 +1,7 @@
 # PagedList.Core.Mvc
 PagedList tag helper for ASP.NET Core
 
-## Installtion
+## Installation
 
 1. Install `PagedList.Core.Mvc` package from Nuget.
 
@@ -13,15 +13,15 @@ PagedList tag helper for ASP.NET Core
     // Add framework services.
     services.AddMvc();
     
-    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>(); // <=
+    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>(); // <= Add this
   }
 ```
 
-3. Add the following code in `_ViewImports.cshtml`
+3. Edit `_ViewImports.cshtml`
 
-```html
+```diff
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, PagedList.Core.Mvc
++ @addTagHelper *, PagedList.Core.Mvc
 ```
 
 ## Usage
