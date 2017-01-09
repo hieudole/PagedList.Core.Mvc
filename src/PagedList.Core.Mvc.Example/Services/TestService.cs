@@ -6,75 +6,27 @@ namespace PagedList.Core.Mvc.Example.Services
 {
     public class TestService
     {
-        private static List<TestModel> SampleTests = new List<TestModel>()
+        private IList<TestModel> sampleData;
+
+        public TestService()
         {
-            new TestModel()
+            this.sampleData = new List<TestModel>();
+
+            for (var i = 1; i <= 500; i++)
             {
-                Name = "Test 1"
-            },
-            new TestModel()
-            {
-                Name = "Test 2"
-            },
-            new TestModel()
-            {
-                Name = "Test 3"
-            },
-            new TestModel()
-            {
-                Name = "Test 4"
-            },
-            new TestModel()
-            {
-                Name = "Test 5"
-            },
-            new TestModel()
-            {
-                Name = "Test 6"
-            },
-            new TestModel()
-            {
-                Name = "Test 7"
-            },
-            new TestModel()
-            {
-                Name = "Test 8"
-            },
-            new TestModel()
-            {
-                Name = "Test 9"
-            },
-            new TestModel()
-            {
-                Name = "Test 10"
-            },
-            new TestModel()
-            {
-                Name = "Test 11"
-            },
-            new TestModel()
-            {
-                Name = "Test 12"
-            },
-            new TestModel()
-            {
-                Name = "Test 13"
-            },
-            new TestModel()
-            {
-                Name = "Test 14"
-            },
-            new TestModel()
-            {
-                Name = "Test 15"
+                this.sampleData.Add(
+                    new TestModel()
+                    {
+                        Name = "Test " + i
+                    });
             }
-        };
+        }
 
         public IPagedList<TestModel> GetTests(int pageNumber, int pageSize)
         {
-            var tests = SampleTests.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            var tests = this.sampleData.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-            return new StaticPagedList<TestModel>(tests, pageNumber, pageSize, SampleTests.Count);
+            return new StaticPagedList<TestModel>(tests, pageNumber, pageSize, this.sampleData.Count);
         }
     }
 }

@@ -255,6 +255,7 @@ namespace PagedList.Core.Mvc
                 lastPageToDisplay = firstPageToDisplay + pageNumbersToDisplay - 1;
                 if (lastPageToDisplay > this.List.PageCount)
                 {
+                    lastPageToDisplay = this.List.PageCount;
                     firstPageToDisplay = this.List.PageCount - maxPageNumbersToDisplay + 1;
                 }
             }
@@ -292,7 +293,7 @@ namespace PagedList.Core.Mvc
                     listItemLinks.Add(Ellipses());
                 }
 
-                foreach (var i in Enumerable.Range(firstPageToDisplay, lastPageToDisplay))
+                for (int i = firstPageToDisplay; i <= lastPageToDisplay; i++)
                 {
                     //show delimiter between page numbers
                     if (i > firstPageToDisplay && !string.IsNullOrWhiteSpace(this.Options.DelimiterBetweenPageNumbers))

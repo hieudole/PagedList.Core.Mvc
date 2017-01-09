@@ -16,7 +16,7 @@ namespace PagedList.Core.Mvc.Example.Controllers
         public IActionResult Index(int? page)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 3;
+            var pageSize = 10;
                         
             var viewModel = new TestListViewModel();
             viewModel.Tests = this.testService.GetTests(pageNumber, pageSize);
