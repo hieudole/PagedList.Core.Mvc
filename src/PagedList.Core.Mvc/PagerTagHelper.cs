@@ -97,7 +97,7 @@ namespace PagedList.Core.Mvc
             {
                 return urlHelper.Action(this.AspAction, this.AspController, routeValues);
             }
-            
+
             return pageNumber.ToString();
         }
 
@@ -126,9 +126,15 @@ namespace PagedList.Core.Mvc
         {
             const int targetPageNumber = 1;
             var first = new TagBuilder("a");
+            foreach (var @class in this.Options.AhrefElementClasses)
+            {
+                first.AddCssClass(@class);
+            }
+
             first.InnerHtml.AppendHtml(string.Format(this.Options.LinkToFirstPageFormat, targetPageNumber));
 
-            if (this.List.IsFirstPage) {
+            if (this.List.IsFirstPage)
+            {
                 return WrapInListItem(first, "PagedList-skipToFirst", "disabled");
             }
 
@@ -140,6 +146,12 @@ namespace PagedList.Core.Mvc
         {
             var targetPageNumber = this.List.PageNumber - 1;
             var previous = new TagBuilder("a");
+
+            foreach (var @class in this.Options.AhrefElementClasses)
+            {
+                previous.AddCssClass(@class);
+            }
+
             previous.InnerHtml.AppendHtml(string.Format(this.Options.LinkToPreviousPageFormat, targetPageNumber));
             previous.Attributes["rel"] = "prev";
 
@@ -159,6 +171,11 @@ namespace PagedList.Core.Mvc
                 ?? (pageNumber => string.Format(this.Options.LinkToIndividualPageFormat, pageNumber));
             var targetPageNumber = i;
             var page = new TagBuilder("a");
+            foreach (var @class in this.Options.AhrefElementClasses)
+            {
+                page.AddCssClass(@class);
+            }
+
             page.InnerHtml.AppendHtml(format(targetPageNumber));
 
             if (i == this.List.PageNumber)
@@ -172,6 +189,11 @@ namespace PagedList.Core.Mvc
         {
             var targetPageNumber = this.List.PageNumber + 1;
             var next = new TagBuilder("a");
+            foreach (var @class in this.Options.AhrefElementClasses)
+            {
+                next.AddCssClass(@class);
+            }
+
             next.InnerHtml.AppendHtml(string.Format(this.Options.LinkToNextPageFormat, targetPageNumber));
             next.Attributes["rel"] = "next";
 
@@ -188,6 +210,11 @@ namespace PagedList.Core.Mvc
         {
             var targetPageNumber = this.List.PageCount;
             var last = new TagBuilder("a");
+            foreach (var @class in this.Options.AhrefElementClasses)
+            {
+                last.AddCssClass(@class);
+            }
+
             last.InnerHtml.AppendHtml(string.Format(this.Options.LinkToLastPageFormat, targetPageNumber));
 
             if (this.List.IsLastPage)

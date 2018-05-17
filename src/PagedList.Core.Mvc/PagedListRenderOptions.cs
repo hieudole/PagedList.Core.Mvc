@@ -7,7 +7,7 @@ namespace PagedList.Core.Mvc
     ///<summary>
     /// Options for configuring the output of <see cref = "HtmlHelper" />.
     ///</summary>
-    public class PagedListRenderOptions
+    public partial class PagedListRenderOptions
     {
         ///<summary>
         /// The default settings render all navigation links and no descriptive text.
@@ -35,6 +35,7 @@ namespace PagedList.Core.Mvc
             ClassToApplyToLastListItemInPager = null;
             UlElementClasses = new[] { "pagination" };
             LiElementClasses = Enumerable.Empty<string>();
+            AhrefElementClasses = Enumerable.Empty<string>();
         }
 
         ///<summary>
@@ -422,6 +423,33 @@ namespace PagedList.Core.Mvc
                     ClassToApplyToLastListItemInPager = "next",
                     LinkToPreviousPageFormat = "&larr; Older",
                     LinkToNextPageFormat = "Newer &rarr;"
+                };
+            }
+        }
+
+        public IEnumerable<string> AhrefElementClasses { get; set; }
+
+        ///<summary>
+        /// Twitter Bootstrap 4's basic pager format (just Previous and Next links).
+        ///</summary>
+        public static PagedListRenderOptions TwitterBootstrapPager4
+        {
+            get
+            {
+                return new PagedListRenderOptions
+                {
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    DisplayLinkToIndividualPages = true,
+                    UlElementClasses = new[] { "pagination" },
+                    LiElementClasses = new[] { "page-item" },
+                    AhrefElementClasses = new[] { "page-link" },
+                    ClassToApplyToFirstListItemInPager = null,
+                    ClassToApplyToLastListItemInPager = null,
+                    LinkToPreviousPageFormat = "Previous",
+                    LinkToNextPageFormat = "Next"
                 };
             }
         }
