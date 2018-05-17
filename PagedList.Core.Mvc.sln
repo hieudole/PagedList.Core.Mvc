@@ -1,18 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{88E1B1CB-6645-4035-91EA-67F714076104}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B9A6A74D-7273-4409-8433-016CD0960767}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PagedList.Core.Mvc.Example", "src\PagedList.Core.Mvc.Example\PagedList.Core.Mvc.Example.xproj", "{744C466A-1344-49B7-88C3-C53378155B68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PagedList.Core.Mvc.Example", "src\PagedList.Core.Mvc.Example\PagedList.Core.Mvc.Example.csproj", "{744C466A-1344-49B7-88C3-C53378155B68}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PagedList.Core.Mvc", "src\PagedList.Core.Mvc\PagedList.Core.Mvc.xproj", "{A06991AB-69A7-48E6-9536-C35C066818FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PagedList.Core.Mvc", "src\PagedList.Core.Mvc\PagedList.Core.Mvc.csproj", "{A06991AB-69A7-48E6-9536-C35C066818FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,5 +32,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{744C466A-1344-49B7-88C3-C53378155B68} = {88E1B1CB-6645-4035-91EA-67F714076104}
 		{A06991AB-69A7-48E6-9536-C35C066818FF} = {88E1B1CB-6645-4035-91EA-67F714076104}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C270D87-21FB-4A92-BBCC-1A1EC1C3116A}
 	EndGlobalSection
 EndGlobal
