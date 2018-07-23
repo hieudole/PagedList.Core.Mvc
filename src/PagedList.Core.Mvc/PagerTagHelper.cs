@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -69,14 +70,18 @@ namespace PagedList.Core.Mvc
 
         #endregion
 
-        private IUrlHelper urlHelper;
+        [HtmlAttributeNotBound]
+        [ViewContext]
+        public ViewContext ViewContext { get; set; }
 
-        public PagerTagHelper(IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccesor)
+        private IUrlHelperFactory urlHelperFactory;
+
+        public PagerTagHelper(IUrlHelperFactory urlHelperFactory)
         {
-            this.urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccesor.ActionContext);
+            this.urlHelperFactory = urlHelperFactory;
         }
 
-        private string GeneratePageUrl(int pageNumber)
+        private string GeneratePageUrl(int pageNumber, IUrlHelper urlHelper)
         {
             var routeValues = new RouteValueDictionary();
 
@@ -122,7 +127,7 @@ namespace PagedList.Core.Mvc
             return li;
         }
 
-        private TagBuilder First()
+        private TagBuilder First(IUrlHelper urlHelper)
         {
             const int targetPageNumber = 1;
             var first = new TagBuilder("a");
@@ -138,11 +143,11 @@ namespace PagedList.Core.Mvc
                 return WrapInListItem(first, "PagedList-skipToFirst", "disabled");
             }
 
-            first.Attributes["href"] = GeneratePageUrl(targetPageNumber);
+            first.Attributes["href"] = GeneratePageUrl(targetPageNumber, urlHelper);
             return WrapInListItem(first, "PagedList-skipToFirst");
         }
 
-        private TagBuilder Previous()
+        private TagBuilder Previous(IUrlHelper urlHelper)
         {
             var targetPageNumber = this.List.PageNumber - 1;
             var previous = new TagBuilder("a");
@@ -160,12 +165,12 @@ namespace PagedList.Core.Mvc
                 return WrapInListItem(previous, "PagedList-skipToPrevious", "disabled");
             }
 
-            previous.Attributes["href"] = this.GeneratePageUrl(targetPageNumber);
+            previous.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
 
             return WrapInListItem(previous, "PagedList-skipToPrevious");
         }
 
-        private TagBuilder Page(int i)
+        private TagBuilder Page(int i, IUrlHelper urlHelper)
         {
             var format = this.Options.FunctionToDisplayEachPageNumber
                 ?? (pageNumber => string.Format(this.Options.LinkToIndividualPageFormat, pageNumber));
@@ -181,11 +186,11 @@ namespace PagedList.Core.Mvc
             if (i == this.List.PageNumber)
                 return WrapInListItem(page, "active");
 
-            page.Attributes["href"] = this.GeneratePageUrl(targetPageNumber);
+            page.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
             return WrapInListItem(page);
         }
 
-        private TagBuilder Next()
+        private TagBuilder Next(IUrlHelper urlHelper)
         {
             var targetPageNumber = this.List.PageNumber + 1;
             var next = new TagBuilder("a");
@@ -202,11 +207,11 @@ namespace PagedList.Core.Mvc
                 return WrapInListItem(next, "PagedList-skipToNext", "disabled");
             }
 
-            next.Attributes["href"] = this.GeneratePageUrl(targetPageNumber);
+            next.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
             return WrapInListItem(next, "PagedList-skipToNext");
         }
 
-        private TagBuilder Last()
+        private TagBuilder Last(IUrlHelper urlHelper)
         {
             var targetPageNumber = this.List.PageCount;
             var last = new TagBuilder("a");
@@ -222,7 +227,7 @@ namespace PagedList.Core.Mvc
                 return WrapInListItem(last, "PagedList-skipToLast", "disabled");
             }
 
-            last.Attributes["href"] = this.GeneratePageUrl(targetPageNumber);
+            last.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
             return WrapInListItem(last, "PagedList-skipToLast");
         }
 
@@ -262,6 +267,8 @@ namespace PagedList.Core.Mvc
                 this.Options = new PagedListRenderOptions();
             }
 
+            var urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
+
             var listItemLinks = new List<TagBuilder>();
 
             //calculate start and end of range of page numbers
@@ -290,13 +297,13 @@ namespace PagedList.Core.Mvc
             //first
             if (this.Options.DisplayLinkToFirstPage == PagedListDisplayMode.Always || (this.Options.DisplayLinkToFirstPage == PagedListDisplayMode.IfNeeded && firstPageToDisplay > 1))
             {
-                listItemLinks.Add(First());
+                listItemLinks.Add(First(urlHelper));
             }
 
             //previous
             if (this.Options.DisplayLinkToPreviousPage == PagedListDisplayMode.Always || (this.Options.DisplayLinkToPreviousPage == PagedListDisplayMode.IfNeeded && !this.List.IsFirstPage))
             {
-                listItemLinks.Add(Previous());
+                listItemLinks.Add(Previous(urlHelper));
             }
 
             //text
@@ -329,7 +336,7 @@ namespace PagedList.Core.Mvc
                     }
 
                     //show page number link
-                    listItemLinks.Add(Page(i));
+                    listItemLinks.Add(Page(i, urlHelper));
                 }
 
                 //if there are subsequent page numbers not displayed, show an ellipsis
@@ -342,13 +349,13 @@ namespace PagedList.Core.Mvc
             //next
             if (this.Options.DisplayLinkToNextPage == PagedListDisplayMode.Always || (this.Options.DisplayLinkToNextPage == PagedListDisplayMode.IfNeeded && !this.List.IsLastPage))
             {
-                listItemLinks.Add(Next());
+                listItemLinks.Add(Next(urlHelper));
             }
 
             //last
             if (this.Options.DisplayLinkToLastPage == PagedListDisplayMode.Always || (this.Options.DisplayLinkToLastPage == PagedListDisplayMode.IfNeeded && lastPageToDisplay < this.List.PageCount))
             {
-                listItemLinks.Add(Last());
+                listItemLinks.Add(Last(urlHelper));
             }
 
             if (listItemLinks.Any())
