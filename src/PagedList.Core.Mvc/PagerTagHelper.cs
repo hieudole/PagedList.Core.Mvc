@@ -52,6 +52,15 @@ namespace PagedList.Core.Mvc
 
         #endregion
 
+        #region asp-area
+
+        private const string AreaAttributeName = "asp-area";
+
+        [HtmlAttributeName(AreaAttributeName)]
+        public string AspArea { get; set; }
+
+        #endregion
+
         #region options
 
         private const string OptionsAttributeName = "options";
@@ -83,27 +92,20 @@ namespace PagedList.Core.Mvc
 
         private string GeneratePageUrl(int pageNumber, IUrlHelper urlHelper)
         {
-            var routeValues = new RouteValueDictionary();
+            var routeValues = new RouteValueDictionary(this.RouteValues);
 
-            foreach (var routeValue in this.RouteValues)
+            if (this.ParamPageNumber != null)
             {
-                if (!routeValues.ContainsKey(routeValue.Key.ToLower()))
-                {
-                    routeValues.Add(routeValue.Key, routeValue.Value);
-                }
+                routeValues[this.ParamPageNumber] = pageNumber;
             }
 
-            if (!routeValues.ContainsKey(this.ParamPageNumber))
+            // Unconditionally replace any value from asp-route-area.
+            if (this.AspArea != null)
             {
-                routeValues.Add(this.ParamPageNumber, pageNumber.ToString());
+                routeValues["area"] = this.AspArea;
             }
 
-            if (this.AspAction != null && this.AspController != null)
-            {
-                return urlHelper.Action(this.AspAction, this.AspController, routeValues);
-            }
-
-            return pageNumber.ToString();
+            return urlHelper.Action(this.AspAction, this.AspController, routeValues);
         }
 
         private TagBuilder WrapInListItem(string text)
