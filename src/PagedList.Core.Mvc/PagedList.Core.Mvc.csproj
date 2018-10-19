@@ -4,7 +4,7 @@
     <Description>A tag helper for generating pager control for use with PagedList.Core library.</Description>
     <Copyright>Hieu Le</Copyright>
     <AssemblyTitle>PagedList.Core.Mvc</AssemblyTitle>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>PagedList.Core.Mvc</AssemblyName>
     <PackageId>PagedList.Core.Mvc</PackageId>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
