@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PagedList.Core.Mvc.Example.Services;
-using PagedList.Core.Mvc.Example.ViewModels;
+using PagedList.Core.Mvc.Example.Models;
 
 namespace PagedList.Core.Mvc.Example.Controllers
 {

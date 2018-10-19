@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using PagedList.Core.Mvc.Example.Models;
 
 namespace PagedList.Core.Mvc.Example.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(int? page)
+        public IActionResult Index()
         {
             return View();
         }
@@ -27,9 +25,15 @@ namespace PagedList.Core.Mvc.Example.Controllers
             return View();
         }
 
-        public IActionResult Error()
+        public IActionResult Privacy()
         {
             return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

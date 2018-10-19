@@ -1,6 +1,4 @@
-﻿using PagedList.Core.Mvc.Example.Models;
-
-namespace PagedList.Core.Mvc.Example.ViewModels
+﻿namespace PagedList.Core.Mvc.Example.Models
 {
     public class TestListViewModel
     {

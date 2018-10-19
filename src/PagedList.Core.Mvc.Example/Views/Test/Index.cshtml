@@ -1,6 +1,6 @@
 ﻿@using PagedList.Core.Mvc
 
-@model PagedList.Core.Mvc.Example.ViewModels.TestListViewModel
+@model PagedList.Core.Mvc.Example.Models.TestListViewModel
 
 @{
     ViewData["Title"] = "Pager Test";
@@ -18,5 +18,5 @@
             <li>@test.Name</li>
         }
     </ul>
-    <pager class="pager-container" list="@Model.Tests" options="@PagedListRenderOptions.TwitterBootstrapPager" asp-action="Index" asp-controller="Test" />
+    <pager class="pager-container" list="@Model.Tests" options="@PagedListRenderOptions.TwitterBootstrapPager" asp-action="Index" asp-controller="Test" asp-route-addtional-param="Additional-Param-Value"/>
 }
