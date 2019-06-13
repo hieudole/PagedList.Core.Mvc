@@ -30,18 +30,17 @@ namespace PagedList.Core.Mvc
             LinkToLastPageFormat = "»»";
             PageCountAndCurrentLocationFormat = "Page {0} of {1}.";
             ItemSliceAndTotalFormat = "Showing items {0} through {1} of {2}.";
-            FunctionToDisplayEachPageNumber = null;
             ClassToApplyToFirstListItemInPager = null;
             ClassToApplyToLastListItemInPager = null;
+            ContainerHtmlTag = "nav";
             UlElementClasses = new[] { "pagination" };
             LiElementClasses = Enumerable.Empty<string>();
             AhrefElementClasses = Enumerable.Empty<string>();
+            ActiveElementClasses = new[] { "active" };
+            DisabledElementClasses = new[] { "disabled" };
         }
 
-        ///<summary>
-        /// CSS Classes to append to the &lt;div&gt; element that wraps the paging control.
-        ///</summary>
-        //public IEnumerable<string> ContainerDivClasses { get; set; }
+        public string ContainerHtmlTag { get; set; }
 
         ///<summary>
         /// CSSClasses to append to the &lt;ul&gt; element in the paging control.
@@ -52,6 +51,12 @@ namespace PagedList.Core.Mvc
         /// CSS Classes to append to every &lt;li&gt; element in the paging control.
         ///</summary>
         public IEnumerable<string> LiElementClasses { get; set; }
+
+        public IEnumerable<string> AhrefElementClasses { get; set; }
+
+        public IEnumerable<string> ActiveElementClasses { get; set; }
+
+        public IEnumerable<string> DisabledElementClasses { get; set; }
 
         ///<summary>
         /// Specifies a CSS class to append to the first list item in the pager. If null or whitespace is defined, no additional class is added to first list item in list.
@@ -189,204 +194,11 @@ namespace PagedList.Core.Mvc
         public string ItemSliceAndTotalFormat { get; set; }
 
         /// <summary>
-        /// A function that will render each page number when specified (and DisplayLinkToIndividualPages is true). If no function is specified, the LinkToIndividualPageFormat value will be used instead.
-        /// </summary>
-        public Func<int, string> FunctionToDisplayEachPageNumber { get; set; }
-
-        /// <summary>
         /// Text that will appear between each page number. If null or whitespace is specified, no delimiter will be shown.
         /// </summary>
         public string DelimiterBetweenPageNumbers { get; set; }
 
-        ///// <summary>
-        ///// An extension point which allows you to fully customize the anchor tags used for clickable pages, as well as navigation features such as Next, Last, etc.
-        ///// </summary>
-        //public Func<TagBuilder, TagBuilder, TagBuilder> FunctionToTransformEachPageLink { get; set; }
-
-        ///// <summary>
-        ///// Enables ASP.NET MVC's unobtrusive AJAX feature. An XHR request will retrieve HTML from the clicked page and replace the innerHtml of the provided element ID.
-        ///// </summary>
-        ///// <param name="options">The preferred Html.PagedList(...) style options.</param>
-        //      /// <param name="ajaxOptions">The ajax options that will put into the link</param>
-        ///// <returns>The PagedListRenderOptions value passed in, with unobtrusive AJAX attributes added to the page links.</returns>
-        //      public static PagedListRenderOptions EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions options, AjaxOptions ajaxOptions)
-        //{
-        //	options.FunctionToTransformEachPageLink = (liTagBuilder, aTagBuilder) =>
-        //		                                          {
-        //														var liClass = liTagBuilder.Attributes.ContainsKey("class") ? liTagBuilder.Attributes["class"] ?? "" : "";
-        //														if (ajaxOptions != null && !liClass.Contains("disabled") && !liClass.Contains("active"))
-        //														{
-        //															foreach (var ajaxOption in ajaxOptions.ToUnobtrusiveHtmlAttributes())
-        //																aTagBuilder.Attributes.Add(ajaxOption.Key, ajaxOption.Value.ToString());
-        //														}
-
-        //														liTagBuilder.InnerHtml = aTagBuilder.ToString();
-        //	                                          			return liTagBuilder;
-        //	                                          	};
-        //	return options;
-        //}
-
-        ///// <summary>
-        ///// Enables ASP.NET MVC's unobtrusive AJAX feature. An XHR request will retrieve HTML from the clicked page and replace the innerHtml of the provided element ID.
-        ///// </summary>
-        //      /// <param name="id">The element ID ("my_id") of the element whose innerHtml should be replaced, if # is included at the start this will be removed.</param>
-        ///// <returns>A default instance of PagedListRenderOptions value passed in, with unobtrusive AJAX attributes added to the page links.</returns>
-        //public static PagedListRenderOptions EnableUnobtrusiveAjaxReplacing(string id)
-        //{
-
-        //          if (id.StartsWith("#"))
-        //              id = id.Substring(1);
-
-        //          var ajaxOptions = new AjaxOptions()
-        //          {
-        //              HttpMethod = "GET",
-        //              InsertionMode = InsertionMode.Replace,
-        //              UpdateTargetId = id
-        //          };
-
-        //          return EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions(), ajaxOptions);
-        //}
-
-        ///// <summary>
-        ///// Enables ASP.NET MVC's unobtrusive AJAX feature. An XHR request will retrieve HTML from the clicked page and replace the innerHtml of the provided element ID.
-        ///// </summary>
-        ///// <param name="ajaxOptions">Ajax options that will be used to generate the unobstrusive tags on the link</param>
-        ///// <returns>A default instance of PagedListRenderOptions value passed in, with unobtrusive AJAX attributes added to the page links.</returns>
-        //public static PagedListRenderOptions EnableUnobtrusiveAjaxReplacing(AjaxOptions ajaxOptions)
-        //{
-        //    return EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions(), ajaxOptions);
-        //}
-
-        ///<summary>
-        /// Also includes links to First and Last pages.
-        ///</summary>
-        public static PagedListRenderOptions Classic
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always
-                };
-            }
-        }
-
-        ///<summary>
-        /// Also includes links to First and Last pages.
-        ///</summary>
-        public static PagedListRenderOptions ClassicPlusFirstAndLast
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always
-                };
-            }
-        }
-
-        ///<summary>
-        /// Shows only the Previous and Next links.
-        ///</summary>
-        public static PagedListRenderOptions Minimal
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    DisplayLinkToIndividualPages = false
-                };
-            }
-        }
-
-        ///<summary>
-        /// Shows Previous and Next links along with current page number and page count.
-        ///</summary>
-        public static PagedListRenderOptions MinimalWithPageCountText
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    DisplayLinkToIndividualPages = false,
-                    DisplayPageCountAndCurrentLocation = true
-                };
-            }
-        }
-
-        ///<summary>
-        ///	Shows Previous and Next links along with index of first and last items on page and total number of items across all pages.
-        ///</summary>
-        public static PagedListRenderOptions MinimalWithItemCountText
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    DisplayLinkToIndividualPages = false,
-                    DisplayItemSliceAndTotal = true
-                };
-            }
-        }
-
-        ///<summary>
-        ///	Shows only links to each individual page.
-        ///</summary>
-        public static PagedListRenderOptions PageNumbersOnly
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Never,
-                    DisplayEllipsesWhenNotShowingAllPageNumbers = false
-                };
-            }
-        }
-
-        ///<summary>
-        ///	Shows Next and Previous while limiting to a max of 5 page numbers at a time.
-        ///</summary>
-        public static PagedListRenderOptions OnlyShowFivePagesAtATime
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    MaximumPageNumbersToDisplay = 5
-                };
-            }
-        }
-
-        ///<summary>
-        /// Twitter Bootstrap 2's basic pager format (just Previous and Next links).
-        ///</summary>
-        public static PagedListRenderOptions TwitterBootstrapPager
+        public static PagedListRenderOptions Bootstrap4Pagination
         {
             get
             {
@@ -397,6 +209,10 @@ namespace PagedList.Core.Mvc
                     DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
                     DisplayLinkToNextPage = PagedListDisplayMode.Always,
                     DisplayLinkToIndividualPages = true,
+                    ContainerHtmlTag = "nav",
+                    UlElementClasses = new[] { "pagination" },
+                    LiElementClasses = new[] { "page-item" },
+                    AhrefElementClasses = new[] { "page-link" },
                     ClassToApplyToFirstListItemInPager = null,
                     ClassToApplyToLastListItemInPager = null,
                     LinkToPreviousPageFormat = "Previous",
@@ -405,49 +221,25 @@ namespace PagedList.Core.Mvc
             }
         }
 
-        ///<summary>
-        /// Twitter Bootstrap 2's basic pager format (just Previous and Next links), with aligned links.
-        ///</summary>
-        public static PagedListRenderOptions TwitterBootstrapPagerAligned
+        public static PagedListRenderOptions Bootstrap4FullPagination
         {
             get
             {
                 return new PagedListRenderOptions
                 {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    DisplayLinkToIndividualPages = false,
-                    ClassToApplyToFirstListItemInPager = "previous",
-                    ClassToApplyToLastListItemInPager = "next",
-                    LinkToPreviousPageFormat = "&larr; Older",
-                    LinkToNextPageFormat = "Newer &rarr;"
-                };
-            }
-        }
-
-        public IEnumerable<string> AhrefElementClasses { get; set; }
-
-        ///<summary>
-        /// Twitter Bootstrap 4's basic pager format (just Previous and Next links).
-        ///</summary>
-        public static PagedListRenderOptions TwitterBootstrapPager4
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
                     DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
                     DisplayLinkToNextPage = PagedListDisplayMode.Always,
                     DisplayLinkToIndividualPages = true,
+                    ContainerHtmlTag = "nav",
                     UlElementClasses = new[] { "pagination" },
                     LiElementClasses = new[] { "page-item" },
                     AhrefElementClasses = new[] { "page-link" },
                     ClassToApplyToFirstListItemInPager = null,
                     ClassToApplyToLastListItemInPager = null,
+                    LinkToFirstPageFormat = "First",
+                    LinkToLastPageFormat = "Last",
                     LinkToPreviousPageFormat = "Previous",
                     LinkToNextPageFormat = "Next"
                 };

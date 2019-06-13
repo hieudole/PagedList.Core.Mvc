@@ -5,5 +5,8 @@
 /.vs
 /src/PagedList.Core.Mvc/bin
 /src/PagedList.Core.Mvc/obj
-/src/PagedList.Core.Mvc.Example/bin
-/src/PagedList.Core.Mvc.Example/obj
+/src/PagedList.Core.Mvc/Properties/PublishProfiles
+/src/PagedList.Core.Mvc/PagedList.Core.Mvc.csproj.user
+/src/.vs
+/src/PagedList.Core.Mvc.Sample/bin
+/src/PagedList.Core.Mvc.Sample/obj

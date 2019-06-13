@@ -14,6 +14,5 @@ PagedList tag helper for ASP.NET Core
 
 ## Usage
 ```html
-<pager class="pager-container" list="@Model.Tests" options="@PagedListRenderOptions.TwitterBootstrapPager" asp-action="Index" asp-controller="Test" asp-route-keyword="@Model.Keyword" />
+<pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@PagedListRenderOptions.Bootstrap4FullPagination" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" />
 ```
-

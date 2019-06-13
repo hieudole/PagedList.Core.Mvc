@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -111,6 +110,7 @@ namespace PagedList.Core.Mvc
         private TagBuilder WrapInListItem(string text)
         {
             var li = new TagBuilder("li");
+
             li.InnerHtml.AppendHtml(text);
 
             return li;
@@ -119,9 +119,13 @@ namespace PagedList.Core.Mvc
         private TagBuilder WrapInListItem(TagBuilder inner, params string[] classes)
         {
             var li = new TagBuilder("li");
-            foreach (var @class in classes)
+
+            if (classes != null)
             {
-                li.AddCssClass(@class);
+                foreach (var @class in classes)
+                {
+                    li.AddCssClass(@class);
+                }
             }
 
             li.InnerHtml.AppendHtml(inner);
@@ -133,6 +137,7 @@ namespace PagedList.Core.Mvc
         {
             const int targetPageNumber = 1;
             var first = new TagBuilder("a");
+
             foreach (var @class in this.Options.AhrefElementClasses)
             {
                 first.AddCssClass(@class);
@@ -142,11 +147,14 @@ namespace PagedList.Core.Mvc
 
             if (this.List.IsFirstPage)
             {
-                return WrapInListItem(first, "PagedList-skipToFirst", "disabled");
+                first.Attributes["tabindex"] = "-1";
+
+                return WrapInListItem(first, this.Options.DisabledElementClasses.ToArray());
             }
 
-            first.Attributes["href"] = GeneratePageUrl(targetPageNumber, urlHelper);
-            return WrapInListItem(first, "PagedList-skipToFirst");
+            first.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
+
+            return WrapInListItem(first);
         }
 
         private TagBuilder Previous(IUrlHelper urlHelper)
@@ -164,31 +172,37 @@ namespace PagedList.Core.Mvc
 
             if (!this.List.HasPreviousPage)
             {
-                return WrapInListItem(previous, "PagedList-skipToPrevious", "disabled");
+                previous.Attributes["tabindex"] = "-1";
+
+                return WrapInListItem(previous, this.Options.DisabledElementClasses.ToArray());
             }
 
             previous.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
 
-            return WrapInListItem(previous, "PagedList-skipToPrevious");
+            return WrapInListItem(previous);
         }
 
         private TagBuilder Page(int i, IUrlHelper urlHelper)
         {
-            var format = this.Options.FunctionToDisplayEachPageNumber
-                ?? (pageNumber => string.Format(this.Options.LinkToIndividualPageFormat, pageNumber));
             var targetPageNumber = i;
-            var page = new TagBuilder("a");
+            var isCurrentPage = targetPageNumber == this.List.PageNumber;
+
+            var page = new TagBuilder(isCurrentPage ? "span" : "a");
+
             foreach (var @class in this.Options.AhrefElementClasses)
             {
                 page.AddCssClass(@class);
             }
 
-            page.InnerHtml.AppendHtml(format(targetPageNumber));
+            page.InnerHtml.AppendHtml(string.Format(this.Options.LinkToIndividualPageFormat, targetPageNumber));
 
-            if (i == this.List.PageNumber)
-                return WrapInListItem(page, "active");
+            if (targetPageNumber == this.List.PageNumber)
+            {
+                return WrapInListItem(page, this.Options.ActiveElementClasses.ToArray());
+            }
 
             page.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
+
             return WrapInListItem(page);
         }
 
@@ -196,6 +210,7 @@ namespace PagedList.Core.Mvc
         {
             var targetPageNumber = this.List.PageNumber + 1;
             var next = new TagBuilder("a");
+
             foreach (var @class in this.Options.AhrefElementClasses)
             {
                 next.AddCssClass(@class);
@@ -206,17 +221,21 @@ namespace PagedList.Core.Mvc
 
             if (!this.List.HasNextPage)
             {
-                return WrapInListItem(next, "PagedList-skipToNext", "disabled");
+                next.Attributes["tabindex"] = "-1";
+
+                return WrapInListItem(next, this.Options.DisabledElementClasses.ToArray());
             }
 
             next.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
-            return WrapInListItem(next, "PagedList-skipToNext");
+
+            return WrapInListItem(next);
         }
 
         private TagBuilder Last(IUrlHelper urlHelper)
         {
             var targetPageNumber = this.List.PageCount;
             var last = new TagBuilder("a");
+
             foreach (var @class in this.Options.AhrefElementClasses)
             {
                 last.AddCssClass(@class);
@@ -226,35 +245,44 @@ namespace PagedList.Core.Mvc
 
             if (this.List.IsLastPage)
             {
-                return WrapInListItem(last, "PagedList-skipToLast", "disabled");
+                return WrapInListItem(last, this.Options.DisabledElementClasses.ToArray());
             }
 
             last.Attributes["href"] = this.GeneratePageUrl(targetPageNumber, urlHelper);
-            return WrapInListItem(last, "PagedList-skipToLast");
+
+            return WrapInListItem(last);
         }
 
         private TagBuilder PageCountAndLocationText()
         {
             var text = new TagBuilder("a");
+
             text.InnerHtml.AppendHtml(string.Format(this.Options.PageCountAndCurrentLocationFormat, this.List.PageNumber, this.List.PageCount));
 
-            return WrapInListItem(text, "PagedList-pageCountAndLocation", "disabled");
+            return WrapInListItem(text, this.Options.DisabledElementClasses.ToArray());
         }
 
         private TagBuilder ItemSliceAndTotalText()
         {
             var text = new TagBuilder("a");
+
             text.InnerHtml.AppendHtml(string.Format(this.Options.ItemSliceAndTotalFormat, this.List.FirstItemOnPage, this.List.LastItemOnPage, this.List.TotalItemCount));
 
-            return WrapInListItem(text, "PagedList-pageCountAndLocation", "disabled");
+            return WrapInListItem(text, this.Options.DisabledElementClasses.ToArray());
         }
 
         private TagBuilder Ellipses()
         {
             var a = new TagBuilder("a");
+
+            foreach (var @class in this.Options.AhrefElementClasses)
+            {
+                a.AddCssClass(@class);
+            }
+
             a.InnerHtml.AppendHtml(this.Options.EllipsesFormat);
 
-            return WrapInListItem(a, "PagedList-ellipses", "disabled");
+            return WrapInListItem(a, this.Options.DisabledElementClasses.ToArray());
         }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -266,22 +294,24 @@ namespace PagedList.Core.Mvc
 
             if (this.Options == null)
             {
-                this.Options = new PagedListRenderOptions();
+                this.Options = PagedListRenderOptions.Bootstrap4Pagination;
             }
 
             var urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
-
             var listItemLinks = new List<TagBuilder>();
 
             //calculate start and end of range of page numbers
             var firstPageToDisplay = 1;
             var lastPageToDisplay = this.List.PageCount;
             var pageNumbersToDisplay = lastPageToDisplay;
+
             if (this.Options.MaximumPageNumbersToDisplay.HasValue && this.List.PageCount > this.Options.MaximumPageNumbersToDisplay)
             {
                 // cannot fit all pages into pager
                 var maxPageNumbersToDisplay = this.Options.MaximumPageNumbersToDisplay.Value;
+
                 firstPageToDisplay = this.List.PageNumber - maxPageNumbersToDisplay / 2;
+
                 if (firstPageToDisplay < 1)
                 {
                     firstPageToDisplay = 1;
@@ -289,6 +319,7 @@ namespace PagedList.Core.Mvc
 
                 pageNumbersToDisplay = maxPageNumbersToDisplay;
                 lastPageToDisplay = firstPageToDisplay + pageNumbersToDisplay - 1;
+
                 if (lastPageToDisplay > this.List.PageCount)
                 {
                     lastPageToDisplay = this.List.PageCount;
@@ -384,7 +415,7 @@ namespace PagedList.Core.Mvc
                 }
             }
 
-            output.TagName = "div";
+            output.TagName = string.IsNullOrWhiteSpace(this.Options.ContainerHtmlTag) ? "div" : this.Options.ContainerHtmlTag;
             output.TagMode = TagMode.StartTagAndEndTag;
 
             var ul = new TagBuilder("ul");
