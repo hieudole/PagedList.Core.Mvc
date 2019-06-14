@@ -16,3 +16,5 @@ PagedList tag helper for ASP.NET Core
 ```html
 <pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@PagedListRenderOptions.Bootstrap4FullPagination" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" />
 ```
+## Sample
+![Sample](../assets/SearchResult.jpg?raw=true)
