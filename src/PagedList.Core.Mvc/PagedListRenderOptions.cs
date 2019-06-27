@@ -197,53 +197,5 @@ namespace PagedList.Core.Mvc
         /// Text that will appear between each page number. If null or whitespace is specified, no delimiter will be shown.
         /// </summary>
         public string DelimiterBetweenPageNumbers { get; set; }
-
-        public static PagedListRenderOptions Bootstrap4Pagination
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    DisplayLinkToIndividualPages = true,
-                    ContainerHtmlTag = "nav",
-                    UlElementClasses = new[] { "pagination" },
-                    LiElementClasses = new[] { "page-item" },
-                    AhrefElementClasses = new[] { "page-link" },
-                    ClassToApplyToFirstListItemInPager = null,
-                    ClassToApplyToLastListItemInPager = null,
-                    LinkToPreviousPageFormat = "Previous",
-                    LinkToNextPageFormat = "Next"
-                };
-            }
-        }
-
-        public static PagedListRenderOptions Bootstrap4FullPagination
-        {
-            get
-            {
-                return new PagedListRenderOptions
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    DisplayLinkToIndividualPages = true,
-                    ContainerHtmlTag = "nav",
-                    UlElementClasses = new[] { "pagination" },
-                    LiElementClasses = new[] { "page-item" },
-                    AhrefElementClasses = new[] { "page-link" },
-                    ClassToApplyToFirstListItemInPager = null,
-                    ClassToApplyToLastListItemInPager = null,
-                    LinkToFirstPageFormat = "First",
-                    LinkToLastPageFormat = "Last",
-                    LinkToPreviousPageFormat = "Previous",
-                    LinkToNextPageFormat = "Next"
-                };
-            }
-        }
     }
 }
