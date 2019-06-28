@@ -294,7 +294,7 @@ namespace PagedList.Core.Mvc
 
             if (this.Options == null)
             {
-                this.Options = PagedListRenderOptions.Bootstrap4;
+                this.Options = PagedListRenderOptions.Bootstrap4PageNumbersPlusPrevAndNext;
             }
 
             var urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);

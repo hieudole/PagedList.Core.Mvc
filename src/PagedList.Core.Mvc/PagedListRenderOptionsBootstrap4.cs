@@ -21,98 +21,93 @@ namespace PagedList.Core.Mvc
 
         private const string DefaultLinkToLastPageFormat = "Last";
 
-        private static PagedListRenderOptions GetBootstrap4Option()
+        private static void SetBootstrap4Option(PagedListRenderOptions option)
         {
-            return new PagedListRenderOptions
-            {
-                ContainerHtmlTag = DefaultContainerHtmlTag,
-                UlElementClasses = DefaultUlElementClasses,
-                LiElementClasses = DefaultLiElementClasses,
-                AhrefElementClasses = DefaultAhrefElementClasses,
-                LinkToPreviousPageFormat = DefaultLinkToPreviousPageFormat,
-                LinkToNextPageFormat = DefaultLinkToNextPageFormat,
-                LinkToFirstPageFormat = DefaultLinkToFirstPageFormat,
-                LinkToLastPageFormat = DefaultLinkToLastPageFormat
-            };
+            option.ContainerHtmlTag = DefaultContainerHtmlTag;
+            option.UlElementClasses = DefaultUlElementClasses;
+            option.LiElementClasses = DefaultLiElementClasses;
+            option.AhrefElementClasses = DefaultAhrefElementClasses;
+            option.LinkToPreviousPageFormat = DefaultLinkToPreviousPageFormat;
+            option.LinkToNextPageFormat = DefaultLinkToNextPageFormat;
+            option.LinkToFirstPageFormat = DefaultLinkToFirstPageFormat;
+            option.LinkToLastPageFormat = DefaultLinkToLastPageFormat;
         }
 
         /// <summary>
-        /// Show Numbers, First, Last, Previous and Next links.
+        /// Only show Previous and Next links.
         /// </summary>
-        public static PagedListRenderOptions Bootstrap4
+        public static PagedListRenderOptions Bootstrap4Minimal
         {
             get
             {
-                var option = GetBootstrap4Option();
+                var option = new PagedListRenderOptions();
 
-                option.DisplayLinkToFirstPage = PagedListDisplayMode.Never;
-                option.DisplayLinkToLastPage = PagedListDisplayMode.Never;
-                option.DisplayLinkToPreviousPage = PagedListDisplayMode.Always;
-                option.DisplayLinkToNextPage = PagedListDisplayMode.Always;
-                option.DisplayLinkToIndividualPages = true;
-                option.ClassToApplyToFirstListItemInPager = null;
-                option.ClassToApplyToLastListItemInPager = null;
+                SetBootstrap4Option(option);
+                SetMinimalOption(option);
 
                 return option;
             }
         }
 
         /// <summary>
-        /// Show Numbers, First, Last, Previous and Next links.
+        /// Only show Page Numbers.
+        /// </summary>
+        public static PagedListRenderOptions Bootstrap4PageNumbersOnly
+        {
+            get
+            {
+                var option = new PagedListRenderOptions();
+
+                SetBootstrap4Option(option);
+                SetPageNumbersOnlyOption(option);
+
+                return option;
+            }
+        }
+
+        /// <summary>
+        /// Show Page Numbers plus Previous and Next links.
+        /// </summary>
+        public static PagedListRenderOptions Bootstrap4PageNumbersPlusPrevAndNext
+        {
+            get
+            {
+                var option = new PagedListRenderOptions();
+
+                SetBootstrap4Option(option);
+                SetPageNumbersPlusPrevAndNextOption(option);
+
+                return option;
+            }
+        }
+
+        /// <summary>
+        /// Show Page Numbers plus First and Last links.
+        /// </summary>
+        public static PagedListRenderOptions Bootstrap4PageNumbersPlusFirstAndLast
+        {
+            get
+            {
+                var option = new PagedListRenderOptions();
+
+                SetBootstrap4Option(option);
+                SetPageNumbersPlusFirstAndLastOption(option);
+
+                return option;
+            }
+        }
+
+        /// <summary>
+        /// Show Page Numbers plus Previous, Next, First and Last links.
         /// </summary>
         public static PagedListRenderOptions Bootstrap4Full
         {
             get
             {
-                var option = GetBootstrap4Option();
+                var option = new PagedListRenderOptions();
 
-                option.DisplayLinkToFirstPage = PagedListDisplayMode.Always;
-                option.DisplayLinkToLastPage = PagedListDisplayMode.Always;
-                option.DisplayLinkToPreviousPage = PagedListDisplayMode.Always;
-                option.DisplayLinkToNextPage = PagedListDisplayMode.Always;
-                option.DisplayLinkToIndividualPages = true;
-                option.ClassToApplyToFirstListItemInPager = null;
-                option.ClassToApplyToLastListItemInPager = null;
-
-                return option;
-            }
-        }
-
-        ///<summary>
-        /// Shows only the Number links.
-        ///</summary>
-        public static PagedListRenderOptions Bootstrap4PageNumbersOnly
-        {
-            get
-            {
-                var option = GetBootstrap4Option();
-
-                option.DisplayLinkToFirstPage = PagedListDisplayMode.Never;
-                option.DisplayLinkToLastPage = PagedListDisplayMode.Never;
-                option.DisplayLinkToPreviousPage = PagedListDisplayMode.Never;
-                option.DisplayLinkToNextPage = PagedListDisplayMode.Never;
-                option.DisplayLinkToIndividualPages = true;
-                option.ClassToApplyToFirstListItemInPager = null;
-                option.ClassToApplyToLastListItemInPager = null;
-
-                return option;
-            }
-        }
-
-        ///<summary>
-        /// Shows only the Previous and Next links.
-        ///</summary>
-        public static PagedListRenderOptions Bootstrap4Minimal
-        {
-            get
-            {
-                var option = GetBootstrap4Option();
-
-                option.DisplayLinkToFirstPage = PagedListDisplayMode.Never;
-                option.DisplayLinkToLastPage = PagedListDisplayMode.Never;
-                option.DisplayLinkToPreviousPage = PagedListDisplayMode.Always;
-                option.DisplayLinkToNextPage = PagedListDisplayMode.Always;
-                option.DisplayLinkToIndividualPages = false;
+                SetBootstrap4Option(option);
+                SetFullOption(option);
 
                 return option;
             }
