@@ -1,4 +1,6 @@
 ﻿@using PagedList.Core.Mvc
+@using PagedList.Core.Mvc.Sample.Pagination
+
 @{
     ViewData["Title"] = "Search Page";
 }
@@ -32,6 +34,7 @@
             <p><h6>Page Numbers with Previous and Next</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@PagedListRenderOptions.Bootstrap4PageNumbersPlusPrevAndNext" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
             <p><h6>Numbers Only</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
             <p><h6>Full</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@PagedListRenderOptions.Bootstrap4Full" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
+            <p><h6>Customized</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@SitePagedListRenderOptions.Boostrap4" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
 
         </div>
     </div>
