@@ -4,6 +4,7 @@
 
 .DS_Store
 /.vs
+/.vscode
 /src/PagedList.Core.Mvc/bin
 /src/PagedList.Core.Mvc/obj
 /src/PagedList.Core.Mvc/Properties/PublishProfiles
