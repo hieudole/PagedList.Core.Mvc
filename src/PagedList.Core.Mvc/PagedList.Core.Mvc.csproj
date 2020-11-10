@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<Version>3.1.4</Version>
+		<TargetFramework>net5.0</TargetFramework>
+		<Version>5.0.0</Version>
 		<Description>A tag helper for generating pager control for use with PagedList.Core library.</Description>
 		<Authors>Troy Goode, Hieu Le, Jeffrey L. Edgett</Authors>
 		<PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
