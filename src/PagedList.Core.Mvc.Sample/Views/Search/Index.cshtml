@@ -35,6 +35,7 @@
             <p><h6>Numbers Only</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
             <p><h6>Full</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@PagedListRenderOptions.Bootstrap4Full" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
             <p><h6>Customized</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@SitePagedListRenderOptions.Boostrap4" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
+            <p><h6>Customized Text</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@SitePagedListRenderOptions.Boostrap4CustomizedText" asp-action="Index" asp-controller="Search" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
 
         </div>
     </div>
