@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/PagedList.Core.Mvc.Sample/bin/Debug/netcoreapp3.0/PagedList.Core.Mvc.Sample.dll",
+            "program": "${workspaceFolder}/PagedList.Core.Mvc.Sample/bin/Debug/net5.0/PagedList.Core.Mvc.Sample.dll",
             "args": [],
             "cwd": "${workspaceFolder}/PagedList.Core.Mvc.Sample",
             "stopAtEntry": false,

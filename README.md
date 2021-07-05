@@ -1,5 +1,5 @@
 # PagedList.Core.Mvc
-PagedList tag helper for ASP.NET Core
+PagedList tag helper for ASP.NET Core (.NET 5.0)
 
 ## Installation
 

@@ -2,7 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+.DS_Store
 /.vs
+/.vscode
 /src/PagedList.Core.Mvc/bin
 /src/PagedList.Core.Mvc/obj
 /src/PagedList.Core.Mvc/Properties/PublishProfiles
